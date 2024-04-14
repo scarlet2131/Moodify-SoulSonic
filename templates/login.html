@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/styles.css">
+    <title>Login</title>
+</head>
+
+<body>
+
+     <!-- Navigation Bar -->
+    <nav>
+        <div class="nav-container">
+            <!-- Logo on the left side -->
+        <a href="#" onclick="checkAccess(event)" class="logo">
+            <img src="/static/images/logo.jpg" alt="Logo" class="nav-logo">
+        </a>
+        <!-- Navigation items in the center -->
+        <div class="nav-items">
+            <a href="/register" class="nav-item">Register</a>
+            <a href="#" onclick="checkAccess(event)" class="nav-item">Explore Music</a>
+        </div>
+        </div>
+    </nav>
+
+    <h2>Welcome to Moodify!!</h2>
+
+
+    <form id="loginForm">
+        <input type="text" name="username" placeholder="Username" required>
+        <input type="password" name="password" placeholder="Password" required>
+        <button type="submit">Login</button>
+        <div class="reset-link">
+            <a href="/resetPassword" >Forgot your password?</a>
+        </div>
+    </form>
+
+    <div id="message"></div> <!-- Message display area -->
+
+    <script src="/static/login.js">
+    </script>
+    <footer class="site-footer">
+        <div class="footer-container">
+            <p>© 2024 Moodify. All rights reserved.</p>
+        </div>
+    </footer>
+
+</body>
+</html>

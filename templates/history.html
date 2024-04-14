@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/styles.css">
+    <title>Music Emotion History</title>
+</head>
+<body>
+      <!-- Navigation Bar -->
+    <nav>
+        <div class="nav-container">
+            <!-- Logo on the left side -->
+            <a href="#" onclick="checkAccess(event)" class="logo">
+                <img src="/static/images/logo.jpg" alt="Logo" class="nav-logo">
+            </a>
+            <!-- Navigation items in the center -->
+            <div class="nav-items">
+                <a href="/home" class="nav-item">Home</a>
+                <a href="#" onclick="clearHistory()" class="nav-item ">Clear History</a>
+                <a href="#" onclick="logout()" class="nav-item">Logout</a>
+            </div>
+        </div>
+    </nav>
+
+
+    <h2 style="text-align:center;">Your Music Emotion History</h2>
+
+    <div class="history-container" id="historyContainer">
+        <!-- History content will be injected here -->
+    </div>
+
+    <script src="/static/history.js">
+
+    </script>
+    <footer class="site-footer">
+        <div class="footer-container">
+            <p>© 2024 Moodify. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

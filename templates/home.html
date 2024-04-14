@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/styles.css?">
+    <title>Interactive Form</title>
+    <style>
+    .results-container {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+        padding: 20px;
+    }
+    .recommendation-card {
+        background-color: #fff;
+        border: 1px solid #ddd;
+        padding: 15px;
+        border-radius: 8px;
+        text-align: center;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .recommendation-card img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 8px;
+    }
+    .track-info {
+        margin-top: 10px;
+    }
+    .track-info strong {
+        display: block;
+        margin-bottom: 5px;
+    }
+    .track-info a {
+        color: #007bff;
+        text-decoration: none;
+        font-weight: bold;
+    }
+    .track-info a:hover {
+        text-decoration: underline;
+    }
+
+</style>
+</head>
+<body>
+     <!-- Navigation Bar -->
+    <nav>
+        <div class="nav-container">
+            <!-- Logo on the left side -->
+            <a href="#" onclick="checkAccess(event)" class="logo">
+                <img src="/static/images/logo.jpg" alt="Logo" class="nav-logo">
+            </a>
+            <!-- Navigation items in the center -->
+            <div class="nav-items">
+                <a href="/history" class="nav-item">See History</a>
+                <a href="#" onclick="clearHistory()" class="nav-item ">Clear History</a>
+                <a href="#" onclick="logout()" class="nav-item">Logout</a>
+
+            </div>
+        </div>
+    </nav>
+
+    <div id="chat-form">
+<!--        <h2>How are you feeling today?</h2>-->
+        <form id="questionForm">
+            <div class="question" data-question="1">
+                <input type="text" name="response1" placeholder="Your response" required>
+                <button type="button" class="next-question">Next</button>
+            </div>
+            <!-- The rest of the questions will be dynamically added by JavaScript -->
+        </form>
+
+    </div>
+      <div id="results" class="results-container">
+        <!-- Results will be displayed here -->
+    </div>
+
+
+<!--    <script src="/static/index.js"></script>-->
+<script>
+
+    const questions = {{ questions | tojson }};
+    const userInfoQuestions = {{ user_info_questions | tojson }};
+    const formContainer = document.getElementById('questionForm');
+    let currentQuestionIndex = 0;
+    const responses = [];
+
+    function addNextQuestion() {
+        formContainer.innerHTML = ''; // Clear current form content
+
+        let questionText = '';
+        // This inputName is for debugging or future use; responses are now keyed by question text
+        let inputName = `response${currentQuestionIndex + 1}`;
+
+        // Determine if we're asking a general question or gathering user info
+        if (currentQuestionIndex < questions.length) {
+            questionText = questions[currentQuestionIndex];
+        } else {
+            const userInfoIndex = currentQuestionIndex - questions.length;
+            const userInfoKeys = Object.keys(userInfoQuestions);
+            if (userInfoIndex < userInfoKeys.length) {
+                const key = userInfoKeys[userInfoIndex];
+                questionText = userInfoQuestions[key];
+            }
+        }
+
+        if (questionText) {
+            // Create the next question
+            const questionDiv = document.createElement('div');
+            questionDiv.classList.add('question');
+            questionDiv.innerHTML = `
+                <label>${questionText}</label>
+                <input type="text" name="${inputName}" data-question-text="${questionText}" placeholder="Your response" required>
+                <button type="button" class="next-question">Next</button>
+            `;
+            formContainer.appendChild(questionDiv);
+
+            document.querySelector('.next-question').addEventListener('click', handleNextQuestion);
+        } else {
+            // All questions answered, maybe send responses to server or show a completion message
+            sendResponsesToServer();
+        }
+    }
+
+    function handleNextQuestion(event) {
+        event.preventDefault();
+        const inputField = formContainer.querySelector('input[type="text"]');
+        const inputValue = inputField.value;
+        const questionText = inputField.getAttribute("data-question-text"); // Get the question text
+
+        // Store the response along with its corresponding question text
+        responses.push({ question: questionText, response: inputValue });
+
+        currentQuestionIndex++;
+        addNextQuestion();
+    }
+
+    function sendResponsesToServer() {
+        const payload = {
+            responses: responses
+        };
+
+        fetch('/api/v1/music/analyze-emotions', {
+            method: 'POST',
+            credentials: 'include',  // Ensures cookies are sent with the request
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(payload)
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Success:', data);
+            displayResults(data); // Function to display results
+
+            // Here, you can handle the response data
+            // For example, display the analyzed emotion and recommendations to the user
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
+
+    // Initial call to start displaying questions
+    addNextQuestion();
+
+
+
+    // Define your existing functions here like addNextQuestion, handleNextQuestion, sendResponsesToServer, etc.
+    function displayResults(data) {
+        const formContainer = document.getElementById('chat-form');
+
+        const resultsContainer = document.getElementById('results');
+
+        if (data.recommendations && data.recommendations.length > 0) {
+            formContainer.innerHTML = '<h2 class="recommendations-heading">Enjoy Your Recommendations</h2>';
+
+            const gridHTML = data.recommendations.map(track => `
+                <div class="recommendation-card">
+                    <img src="${track.image_url || '/path/to/default/image.png'}" alt="${track.name}">
+                    <div class="track-info">
+                        <strong>${track.name}</strong>
+                        <span>by ${track.artist}</span>
+                        <a href="${track.spotify_url}" target="_blank">Listen on Spotify</a>
+                    </div>
+                </div>
+            `).join('');
+
+            // Set the innerHTML of the resultsContainer to the heading followed by the grid
+            resultsContainer.innerHTML = gridHTML;
+        } else {
+            resultsContainer.innerHTML = '<p style="text-align:centre">No recommendations available. Try expressing your emotions differently!</p>';
+             resultsContainer.style.visibility = 'hidden';
+            resultsContainer.style.opacity = 0;
+        }
+    }
+
+
+    function logout() {
+        fetch('/api/v1/music/logout', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' }
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Logout successful', data);
+            sessionStorage.removeItem('token'); // Clear the session storage
+            window.location.href = '/login'; // Redirect to login page after logout
+        })
+        .catch(error => console.error('Error logging out:', error));
+    }
+
+
+    function clearHistory() {
+        // We don't need to pass the username as a parameter since it's extracted from the session token
+        fetch('/api/v1/music/history', {
+            method: 'DELETE',
+            credentials: 'include', // This will ensure the session cookie is sent with the request
+            headers: {
+                'Content-Type': 'application/json',
+                // Include other headers like authentication tokens if necessary
+            }
+        })
+        .then(response => {
+            if (!response.ok) {
+                // If the response status code is not OK, throw an error to go to the catch block
+                throw new Error('Error in response');
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.status === 'success') {
+                alert('History cleared successfully.');
+                window.location.reload(); // Reload the page to update the UI
+            } else {
+                alert('Error clearing history: ' + data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error clearing history. Please try again.');
+        });
+    }
+
+</script>
+
+    <footer class="site-footer">
+        <div class="footer-container">
+            <p>© 2024 Moodify. All rights reserved.</p>
+        </div>
+    </footer>
+
+</body>
+</html>

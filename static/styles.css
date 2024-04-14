@@ -1,0 +1,264 @@
+html, body {
+    height: 100%; /* Ensure they take at least the full height of the viewport */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column; /* This helps in pushing the footer down */
+}
+
+body {
+    font-family: Arial, sans-serif;
+    flex: 1; /* Takes up all available space except what's needed for the footer */
+}
+
+/* Navigation bar styles */
+nav {
+   background-image: linear-gradient(#e5631a, #ffb3d1);
+    padding: 10px 0;
+    width: 100%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 100px; /* Add bottom margin to the nav */
+
+
+}
+
+/* Nav container with flexbox */
+.nav-container {
+    display: flex;
+    justify-content: space-between; /* pushes children to opposite ends */
+    align-items: center;
+    padding: 0 10px; /* Add some padding on the sides */
+}
+
+/* Logo style */
+/* Style for the logo image */
+.nav-logo {
+    width: 100px; /* Adjust as needed */
+    height: 100px; /* Adjust as needed */
+    border-radius: 50%; /* This makes the image round */
+    transition: transform 0.3s; /* Smooth transition for zoom effect */
+    object-fit: cover; /* This will make sure to cover the area without losing aspect ratio */
+}
+
+/* Style for zoom effect on hover */
+.nav-logo:hover {
+    transform: scale(1.1); /* Adjust scale value for desired zoom level */
+}
+
+/* Centered nav items */
+.nav-items {
+    display: flex;
+    justify-content: center; /* Center nav items */
+    align-items: center;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/* Style for nav items (links/buttons) */
+.nav-item {
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 18px
+}
+
+.nav-item:hover, .nav-item:focus {
+    background-color: ##;
+}
+
+/* Center the h2 header */
+h2 {
+    text-align: center;
+    color: #333;
+    margin-top: 20px; /* Adjust as needed for spacing */
+}
+
+
+/* Form container */
+form{
+    background: white;
+    max-width: 350px; /* Adjust width of the form */
+    margin: 40px auto;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Shadow effect */
+}
+
+input[type=text], input[type=email], input[type=password] {
+    width: calc(100% - 24px);
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px; /* Rounded corners for input fields */
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    background-color: #feacd0; /* Bootstrap's btn-success color */
+    color: black;
+    border: 3px;
+    border-radius: 4px; /* Rounded corners for buttons */
+    cursor: pointer;
+    font-size: 20px; /* Larger font size */
+  font-weight: 900;
+    margin-top: 10px; /* Spacing above the button */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Consistent shadow effect with form */
+}
+
+button:hover {
+    background-color: #feacd0; /* Slightly darker green on hover */
+}
+
+#message {
+    text-align: center;
+    margin: 10px auto;
+    padding: 10px;
+    background-color: #f2f2f2;
+    color: #333;
+    border: 1px solid #ccc;
+    width: 300px;
+    box-sizing: border-box;
+    border-radius: 5px;
+    visibility: hidden;  /* Make it initially invisible */
+    opacity: 0;          /* Start with no opacity */
+    transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+}
+
+#message.visible {
+    visibility: visible; /* Make it visible */
+    opacity: 1;          /* Full opacity */
+}
+
+.error-message {
+    background-color: #f2dede; /* Bootstrap's alert-danger background color */
+    color: #a94442; /* Bootstrap's alert-danger text color */
+    border-color: #ebccd1; /* Bootstrap's alert-danger border color */
+}
+
+form .reset-link {
+    text-align: center; /* Center the link inside the form */
+    margin-top: 15px; /* Add some space above the link */
+}
+
+form .reset-link a {
+    color: grey; /* Change color to grey */
+    text-decoration: none; /* Remove underline */
+    font-size: 16px; /* Set font size */
+}
+
+form .reset-link a:hover {
+    color: black; /* Color on hover */
+    text-decoration: underline; /* Add underline on hover */
+}
+
+//------------------------------History page styles------------------------------------
+
+ .history-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%; /* or a fixed height if you prefer */
+    text-align: center;
+
+}
+
+.emotion-section {
+    margin-bottom: 40px;
+}
+
+.emotion-title {
+    text-align: center;
+    margin: 20px 0;
+    font-size: 1.5rem;
+}
+
+.tracks-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.track-card {
+    background-color: #fff;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.track-card img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
+
+.track-card a {
+    margin-top: 10px;
+    text-decoration: none;
+    color: #00B4D8;
+    font-weight: bold;
+}
+
+.track-card a:hover {
+    color: #023E8A;
+}
+
+.timestamp {
+    text-align: center;
+    margin-top: 20px;
+}
+
+/* Add responsiveness to the grid */
+@media (max-width: 900px) {
+    .tracks-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+     .results-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    .tracks-grid {
+        grid-template-columns: 1fr;
+    }
+    .results-container {
+        grid-template-columns: 1fr;
+    }
+}
+
+//----------------------------------Footer styles---------------------------
+/* Footer styles */
+.site-footer {
+    position: absolute;
+    bottom: 0; /* Stick to bottom */
+    width: 100%; /* Full width */
+    background-color: rgba(254,172,208,255); /* Footer background color */
+    color: white; /* Footer text color */
+    text-align: center; /* Center footer content */
+    padding: 10px 0; /* Padding inside footer */
+    box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1); /* Shadow above the footer */
+}
+
+footer {
+    padding: 10px 0;
+    background-color: #d07c2f;
+    color: black;
+    text-align: center;
+    width: 100%;
+}
+
+/* Ensures footer sticks to the bottom */
+footer {
+    margin-top: auto; /* Pushes the footer to the bottom of the flex container */
+}
+
+
+
+

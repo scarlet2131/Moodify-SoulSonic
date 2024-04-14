@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/styles.css">
+    <title>Register</title>
+</head>
+<body>
+   <!-- Navigation Bar -->
+    <nav>
+        <div class="nav-container">
+            <!-- Logo on the left side -->
+        <a href="#" onclick="checkAccess(event)" class="logo">
+            <img src="/static/images/logo.jpg" alt="Logo" class="nav-logo">
+        </a>
+        <!-- Navigation items in the center -->
+        <div class="nav-items">
+            <a href="/login" class="nav-item">Login</a>
+            <a href="#" onclick="checkAccess(event)" class="nav-item">Explore Music</a>
+        </div>
+        </div>
+    </nav>
+
+
+    <!-- Registration Form -->
+    <h2>Register</h2> <!-- Header for the registration form -->
+    <form id = "registerForm">
+        <input type="text" name="username" placeholder="Username" required>
+        <input type="email" name="email" placeholder="Email" required>
+        <input type="password" name="password" placeholder="Password" required>
+        <input type="text" name="security_question" placeholder="Security Question" required>
+        <input type="text" name="security_answer" placeholder="Security Answer" required>
+        <button type="submit">Register</button>
+    </form>
+<div id="message"></div> <!-- Message display area -->
+
+    <script src="/static/register.js">
+
+    </script>
+    <footer class="site-footer">
+        <div class="footer-container">
+            <p>© 2024 Moodify. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
