@@ -26,3 +26,5 @@ cd moodify
 python -m venv venv
 source venv/bin/activate  # For Unix or MacOS
 venv\Scripts\activate  # For Windows
+```
+Step 2
