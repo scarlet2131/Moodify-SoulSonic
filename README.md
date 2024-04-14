@@ -27,4 +27,26 @@ python -m venv venv
 source venv/bin/activate  # For Unix or MacOS
 venv\Scripts\activate  # For Windows
 ```
-Step 2
+###Step 2: Set up a virtual environment
+```bash
+python -m venv venv
+source venv/bin/activate  # For Unix or MacOS
+venv\Scripts\activate  # For Windows
+```
+###Step 3:  Install required dependencies
+```bash
+pip install -r requirements.txt
+```
+
+###Step 4: Environment Configuration
+```bash
+SPOTIFY_CLIENT_ID=your_spotify_client_id
+SPOTIFY_CLIENT_SECRET=your_spotify_client_secret
+SPOTIFY_REDIRECT_URI=your_spotify_redirect_uri
+OPENAI_API_KEY=your_openai_api_key
+MONGODB_URI=your_mongodb_uri```
+
+### Usage
+```bash
+uvicorn app.main:app --reload
+```
