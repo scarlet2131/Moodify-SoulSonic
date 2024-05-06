@@ -51,7 +51,7 @@ function displayHistory(historyData) {
 
         container.innerHTML = historyHTML;
     } else {
-        container.innerHTML = '<p style="text-align:centre">No history available.</p>';
+        container.innerHTML = '<p style="text-align:center;">No history available.</p>';
     }
 }
 function logout() {
