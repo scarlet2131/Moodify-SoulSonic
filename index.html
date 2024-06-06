@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/styles.css">
+    <title>Home - Music Recommendation Service</title>
+    <style>
+        .home-container {
+            text-align: center;
+            margin-top: 50px;
+            margin-left: 350px;
+            width: 50%;
+        }
+        .home-container h1 {
+            margin-bottom: 20px;
+            font-size: 2rem;
+        }
+
+        .home-container p {
+            margin-bottom: 20px;
+            font-size: 1.25rem;
+        }
+
+        .email-action {
+            display: flex; /* This will align children elements in a row */
+            justify-content: center; /* This will center the flex items */
+            align-items: center; /* This will vertically align the flex items */
+            margin: auto; /* Center the flex container */
+        }
+
+        #emailInput, #goButton {
+            margin: 0.5rem; /* Spacing around the input and button */
+        }
+
+        #goButton {
+            background-color: #feacd0;
+            color: white;
+            border: none; /* Remove border for button */
+            cursor: pointer;
+            padding: 10px 20px; /* Padding inside the button */
+            width: 70px
+        }
+
+        #goButton:hover {
+            background-color: #feacd0; /* A darker red for hover */
+        }
+    </style>
+</head>
+<body>
+      <!-- Navigation Bar -->
+    <nav>
+        <div class="nav-container">
+            <!-- Logo on the left side -->
+        <a href="#" onclick="checkAccess(event)" class="logo">
+            <img src="/static/images/logo.jpg" alt="Logo" class="nav-logo">
+        </a>
+        <!-- Navigation items in the center -->
+        <div class="nav-items">
+            <a href="/login" class="nav-item">Login</a>
+            <a href="/register" class="nav-item">Register</a>
+        </div>
+        </div>
+    </nav>
+
+    <!-- In your HTML file -->
+    <div class="home-container">
+        <h1>Welcome to Our Music Recommendation Service</h1>
+        <p>Find new music based on your mood and preferences.</p>
+        <div class="email-action">
+            <input type="email" id="emailInput" placeholder="Enter your email" required>
+            <button id="goButton" onclick="redirectUser()">Go</button>
+        </div>
+    </div>
+
+
+    <script src="/static/index.js">
+
+    </script>
+    <footer class="site-footer">
+        <div class="footer-container">
+            <p>© 2024 Moodify. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
